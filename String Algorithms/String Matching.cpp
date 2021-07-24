@@ -1,27 +1,25 @@
 #include <bits/stdc++.h>
-#include <cstdio>
-#include <iostream> 
 using namespace std;
-#define u_map unordered_map
-#define u_set unordered_set
-#define vect vector
-#define ull unsigned long long int
-#define ll long long int
+
 int main() 
 { 
-  ios_base::sync_with_stdio(false);cin.tie(NULL);   
-  #ifndef ONLINE_JUDGE 
-  freopen("input.txt", "r", stdin); 
-  freopen("error.txt", "w", stderr); 
-  freopen("output.txt", "w", stdout); 
-  #endif  
-   int t=1;
-   while(t--) 
-   {
-      string s,p;
-      cin>>s>>p;
-      
-   }      
-   cerr<<"time taken : "<<(float)clock()/CLOCKS_PER_SEC<<" secs"<<endl; 
-   return 0; 
+  string n,m;
+  cin >> n >> m;
+  string s = m + "$" + n;
+  int ans = 0, l = m.length(),len = s.length();
+
+  vector<int> z(s.length(),0);
+  for(int i = 1,l = 0,r = 0; i<len ; i++){
+    if(i <= r)
+      z[i] = min(z[i-l], r-i+1);
+    while(i + z[i] < len && s[z[i]] == s[i + z[i]])
+      ++z[i];
+    if(i + z[i] - 1 > r)
+      l = i, r = i + z[i] - 1;
+  }
+  for(int i : z)
+    if(i == l)
+      ans++;
+  cout<<ans<<"\n";
+  return 0; 
 }
